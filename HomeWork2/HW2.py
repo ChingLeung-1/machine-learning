@@ -167,7 +167,6 @@ if __name__ == "__main__":
     valid(X_valid, Y_valid, mu1, mu2, shared_sigma, N1, N2)
     # 开始对整个训练集训练
     mu1, mu2, shared_sigma, N1, N2 = train(x_train, y_train)
-    for i in 20:
 
     sigma_inv = inv(shared_sigma)
     w = np.dot((mu1 - mu2), sigma_inv)
@@ -177,10 +176,10 @@ if __name__ == "__main__":
     a = np.dot(w, X_t) + b
     y = sigmoid(a)
     y_ = np.around(y).astype(np.int)
-    # df = pd.DataFrame({"id": np.arange(1, 15061), "label": y_})
+    df = pd.DataFrame({"id": np.arange(1, 15061), "label": y_})
     result = (np.squeeze(y_ans) == y_)
     print('Test acc = %f' % (float(result.sum()) / result.shape[0]))
-    # df = pd.DataFrame({"id": np.arange(1, 15061), "label": y_})
-    # if not os.path.exists(OutputDirectory):
-    #     os.mkdir(OutputDirectory)
-    # df.to_csv(os.path.join(OutputDirectory + 'gd_output.csv'), sep='\t', index=False)
+    df = pd.DataFrame({"id": np.arange(1, 15061), "label": y_})
+    if not os.path.exists(OutputDirectory):
+        os.mkdir(OutputDirectory)
+    df.to_csv(os.path.join(OutputDirectory + 'gd_output.csv'), sep='\t', index=False)
